@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        * {
+            background: rgb(26, 134, 116);
+            color: azure;
+        }
+
+        fieldset {
+            position: relative;
+            margin: auto;
+            background: rgb(24, 73, 95);
+            border-radius: 2vh;
+            width: 45vh;
+            margin-top: 18VH;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        hr {
+            color: rgb(174, 70, 223);
+        }
+
+        form {
+            margin: auto;
+            align-content: center;
+            background: rgb(203, 216, 83);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 8px;
+            background: rgb(113, 202, 243);
+        }
+
+        td {
+            margin: 0;
+            padding: auto;
+        }
+
+        .button {
+            cursor: pointer;
+        }
+
+        .textview {
+            width: 80%;
+            border-radius: 10px;
+            padding: 8%;
+            color: rgb(24, 134, 24);
+        }
+
+        input {
+            margin: 0;
+            padding: 2vh 2vw;
+            border-radius: 3px;
+            width: 100%;
+            color: black;
+        }
+
+        footer {
+            text-align: center;
+            margin: 0px;
+            margin-top: 40px;
+        }
+    </style>
+
+    <title>Calculator</title>
+</head>
+
+<body>
+    <h1>A simple calculator in HTML and CSS</h1>
+    <hr>
+    <hr>
+    <fieldset>
+        <form name="form">
+            <hr>
+            <input class="textview" name="display">
+
+            <hr>
+            <table class="panel">
+                <tr class="1">
+                    <td><input type="button" value="AC" onclick="form.display.value=''"></td>
+                    <td><input type="button" value="C" onclick="form.display.value=''"></td>
+                    <td><input type="button" value="%" onclick="form.display.value+='%'"></td>
+                    <td><input type="button" value="/" onclick="form.display.value+='/'"></td>
+                </tr>
+                </tr>
+                <tr class="2">
+                    <td><input type="button" value="7" onclick="form.display.value+='7'"></td>
+                    <td><input type="button" value="8" onclick="form.display.value+='8'"></td>
+                    <td><input type="button" value="9" onclick="form.display.value+='9'"></td>
+                    <td><input type="button" value="*" onclick="form.display.value+='*'"></td>
+                </tr>
+
+                <tr class="3">
+                    <td><input type="button" value="4" onclick="form.display.value+='4'"></td>
+                    <td><input type="button" value="5" onclick="form.display.value+='5'"></td>
+                    <td><input type="button" value="6" onclick="form.display.value+='6'"></td>
+                    <td><input type="button" value="-" onclick="form.display.value+='-'"></td>
+                </tr>
+
+                <tr class="4">
+                    <td><input type="button" value="1" onclick="form.display.value+='1'"></td>
+                    <td><input type="button" value="2" onclick="form.display.value+='2'"></td>
+                    <td><input type="button" value="3" onclick="form.display.value+='3'"></td>
+                    <td><input type="button" value="+" onclick="form.display.value+='+'"></td>
+                </tr>
+
+                <tr class="5">
+                    <td><input type="button" value="+/-" onclick="form.display.value= -(form.display.value)"></td>
+                    <td><input type="button" value="0" onclick="form.display.value+='0'"></td>
+                    <td><input type="button" value="." onclick="form.display.value+='.'"></td>
+                    <td><input type="button" value="=" onclick="form.display.value=eval(form.display.value)"></td>
+                </tr>
+
+            </table>
+        </form>
+
+
+    </fieldset>
+    <footer>K VINOD KUMAR</footer>
+</body>
+
+</html>
