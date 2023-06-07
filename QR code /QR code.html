@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator and Scanner</title>
+    <style>
+        #qrcode {
+            margin-top: 20px;
+        }
+        #scanner {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code Generator and Scanner</h1>
+    
+    <label for="inputText">Enter text:</label>
+    <input type="text" id="inputText">
+    <button onclick="generateQRCode()">Generate QR Code</button>
+
+    <div id="qrcode"></div>
+    
+    <div id="scanner">
+        <h2>QR Code Scanner</h2>
+        <video id="video" width="300" height="200"></video>
+        <br>
+        <button onclick="startScanning()">Start Scanning</button>
+        <button onclick="stopScanning()">Stop Scanning</button>
+        <br>
+        <h3>Scanned Result:</h3>
+        <div id="result"></div>
+    </div>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/grid.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/version.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/detector.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/formatinf.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/errorlevel.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/bitmat.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/datablock.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/bmparser.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/datamask.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/rsdecoder.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/gf256poly.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/gf256.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/decoder.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qrcode.js"></script>
+    <script>
+        <center>
+        function generateQRCode() {
+            var inputText = document.getElementById("inputText").value;
+            if (inputText !== "") {
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: inputText,
+                    width: 128,
+                    height: 128
+                });
+            }
+        }
+        
+        function startScanning() {
+            document.getElementById("scanner").style.display = "block";
+            var video = document.getElementById("video");
+            var canvas = document.createElement("canvas");
+            var context = canvas.getContext("2d");
+            var scanning = true;
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.setAttribute("playsinline", true);
+                    video.play();
+                    requestAnimationFrame(scan);
+                })
+                .catch(function (error) {
+                    console.error("Error accessing the camera: ", error);
+                });
+
+            function scan() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA && scanning) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var code = jsQR(imageData.data, canvas.width, canvas.height);
+                    if (code) {
+                        document.getElementById("result").textContent = code.data;
+                        scanning = false;
+                        video.srcObject.getTracks().forEach(function (track) {
+                            track.stop();
+                        });
+                    }
+                }
+                requestAnimationFrame(scan);
+            }
+        }
+
+        function stopScanning() {
+            document.getElementById("scanner").style.display = "none";
+        }
+    </script>
+    </center>
+</body>
+</html>
