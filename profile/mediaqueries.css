@@ -4,7 +4,7 @@
       margin-bottom: 6rem;
     }
     .about-containers {
-      flex-wrap: wrap;
+      display: inline-block;
     }
   }
   
@@ -48,6 +48,7 @@
     #contact,
     footer {
       height: 40vh;
+      padding: 10%;
     }
     #profile {
       height: 83vh;
